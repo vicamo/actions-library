@@ -1,0 +1,48 @@
+name: 'Debian Releases'
+description: 'Fetch debian releases info'
+branding:
+  icon: 'target'
+  color: 'read'
+
+outputs:
+  json:
+    description: >-
+      A JSON-formatted string in following format:
+        [
+          {
+            distribution: 'debian'
+            suite: 'unstable'
+            codename: 'sid'
+            description: 'Debian x.y Unstable - Not Released'
+            release: '98'
+            mirrors: {
+              default: {
+                url: 'https://deb.debian.org/debian'
+                pockets: {
+                  'sid': { # trixie, trixie-updates, etc.
+                    architectures: [
+                      'all', 'amd64', ...
+                    ]
+                    components: [
+                      'main', 'contrib', 'non-free-firmware', 'non-free'
+                    ]
+                  }
+                }
+              }
+              ports: {
+                url: 'http://ftp.ports.debian.org/debian-ports'
+                ...
+              }
+            }
+          }
+        ]
+    value: ${{ steps.release-info.outputs.json }}
+
+runs:
+  using: 'composite'
+  steps:
+    - id: release-info
+      shell: bash
+      env: >-
+        RELEASE_INFO_JSON=
+      run: echo "json=$(echo $RELEASE_INFO_JSON)" >> $GITHUB_OUTPUT
