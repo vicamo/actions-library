@@ -1,0 +1,72 @@
+name: 'Debian Releases'
+description: 'Fetch debian releases info'
+branding:
+  icon: 'target'
+  color: 'read'
+
+outputs:
+  json:
+    description: >-
+      A JSON-formatted string in following format:
+        [
+          {
+            distribution: 'debian'
+            suite: 'unstable'
+            codename: 'sid'
+            description: 'Debian x.y Unstable - Not Released'
+            release: '98'
+            mirrors: {
+              default: {
+                url: 'https://deb.debian.org/debian'
+                pockets: {
+                  'sid': { # trixie, trixie-updates, etc.
+                    architectures: [
+                      'all', 'amd64', ...
+                    ]
+                    components: [
+                      'main', 'contrib', 'non-free-firmware', 'non-free'
+                    ]
+                  }
+                }
+              }
+              ports: {
+                url: 'http://ftp.ports.debian.org/debian-ports'
+                ...
+              }
+            }
+          }
+        ]
+    value: ${{ steps.release-info.outputs.json }}
+
+runs:
+  using: 'composite'
+  steps:
+    - id: release-info
+      shell: bash
+      env:
+        RELEASE_INFO_JSON: >-
+          [{"distribution":"debian","codename":"experimental","release":"","suite":"","description":"Experimental
+          packages - not released; use at your own
+          risk.","mirrors":{"default":{"url":"https://deb.debian.org/debian","pockets":{"experimental":{"architectures":["all","amd64","arm64","armel","armhf","i386","mips64el","ppc64el","riscv64","s390x"],"components":["main","contrib","non-free-firmware","non-free"]}}}}},{"distribution":"debian","codename":"sid","release":"","suite":"unstable","description":"Debian
+          x.y Unstable - Not
+          Released","mirrors":{"default":{"url":"https://deb.debian.org/debian","pockets":{"sid":{"architectures":["all","amd64","arm64","armel","armhf","i386","mips64el","ppc64el","riscv64","s390x"],"components":["main","contrib","non-free-firmware","non-free"]}}},"ports":{"url":"http://ftp.ports.debian.org/debian-ports","pockets":{"sid":{"architectures":["all","alpha","hppa","hurd-amd64","hurd-i386","ia64","loong64","m68k","powerpc","ppc64","sh4","sparc64","x32"],"components":["main","contrib","non-free","non-free-firmware"]}}}}},{"distribution":"debian","codename":"trixie","release":"13","suite":"testing","description":"Debian
+          x.y Testing distribution - Not
+          Released","mirrors":{"default":{"url":"https://deb.debian.org/debian","pockets":{"trixie-backports":{"architectures":["all","amd64","arm64","armel","armhf","i386","mips64el","ppc64el","s390x"],"components":["main","contrib","non-free-firmware","non-free"]},"trixie-proposed-updates":{"architectures":["all","amd64","arm64","armel","armhf","i386","mips64el","ppc64el","s390x"],"components":["main","contrib","non-free-firmware","non-free"]},"trixie-updates":{"architectures":["all","amd64","arm64","armel","armhf","i386","mips64el","ppc64el","s390x"],"components":["main","contrib","non-free-firmware","non-free"]},"trixie":{"architectures":["all","amd64","arm64","armel","armhf","i386","mips64el","ppc64el","s390x"],"components":["main","contrib","non-free-firmware","non-free"]}}}}},{"distribution":"debian","codename":"bookworm","release":"12","suite":"stable","description":"Debian
+          12.5 Released 10 February
+          2024","mirrors":{"default":{"url":"https://deb.debian.org/debian","pockets":{"bookworm-backports-sloppy":{"architectures":["all","amd64","arm64","armel","armhf","i386","mips64el","mipsel","ppc64el","s390x"],"components":["main","contrib","non-free-firmware","non-free"]},"bookworm-backports":{"architectures":["all","amd64","arm64","armel","armhf","i386","mips64el","mipsel","ppc64el","s390x"],"components":["main","contrib","non-free-firmware","non-free"]},"bookworm-proposed-updates":{"architectures":["all","amd64","arm64","armel","armhf","i386","mips64el","mipsel","ppc64el","s390x"],"components":["main","contrib","non-free-firmware","non-free"]},"bookworm-updates":{"architectures":["all","amd64","arm64","armel","armhf","i386","mips64el","mipsel","ppc64el","s390x"],"components":["main","contrib","non-free-firmware","non-free"]},"bookworm":{"architectures":["all","amd64","arm64","armel","armhf","i386","mips64el","mipsel","ppc64el","s390x"],"components":["main","contrib","non-free-firmware","non-free"]}}}}},{"distribution":"debian","codename":"bullseye","release":"11","suite":"oldstable","description":"Debian
+          11.9 Released 10 February
+          2024","mirrors":{"default":{"url":"https://deb.debian.org/debian","pockets":{"bullseye-backports-sloppy":{"architectures":["all","amd64","arm64","armel","armhf","i386","mips64el","mipsel","ppc64el","s390x"],"components":["main","contrib","non-free"]},"bullseye-backports":{"architectures":["all","amd64","arm64","armel","armhf","i386","mips64el","mipsel","ppc64el","s390x"],"components":["main","contrib","non-free"]},"bullseye-proposed-updates":{"architectures":["all","amd64","arm64","armel","armhf","i386","mips64el","mipsel","ppc64el","s390x"],"components":["main","contrib","non-free"]},"bullseye-updates":{"architectures":["all","amd64","arm64","armel","armhf","i386","mips64el","mipsel","ppc64el","s390x"],"components":["main","contrib","non-free"]},"bullseye":{"architectures":["all","amd64","arm64","armel","armhf","i386","mips64el","mipsel","ppc64el","s390x"],"components":["main","contrib","non-free"]}}}}},{"distribution":"debian","codename":"buster","release":"10","suite":"oldoldstable","description":"Debian
+          10.13 Released 10 September
+          2022","mirrors":{"default":{"url":"https://deb.debian.org/debian","pockets":{"buster-backports-sloppy":{"architectures":["amd64","arm64","armel","armhf","i386","mips","mips64el","mipsel","ppc64el","s390x"],"components":["main","contrib","non-free"]},"buster-backports":{"architectures":["amd64","arm64","armel","armhf","i386","mips","mips64el","mipsel","ppc64el","s390x"],"components":["main","contrib","non-free"]},"buster-proposed-updates":{"architectures":["amd64","arm64","armel","armhf","i386","mips","mips64el","mipsel","ppc64el","s390x"],"components":["main","contrib","non-free"]},"buster-updates":{"architectures":["amd64","arm64","armel","armhf","i386","mips","mips64el","mipsel","ppc64el","s390x"],"components":["main","contrib","non-free"]},"buster":{"architectures":["amd64","arm64","armel","armhf","i386","mips","mips64el","mipsel","ppc64el","s390x"],"components":["main","contrib","non-free"]}}}}},{"distribution":"debian","codename":"stretch","release":"9","suite":"","description":"Debian
+          9.13 Released 18 July
+          2020","mirrors":{"default":{"url":"https://archive.debian.org/debian","pockets":{"stretch-backports-sloppy":{"architectures":["amd64","arm64","armel","armhf","i386","mips","mips64el","mipsel","ppc64el","s390x"],"components":["main","contrib","non-free"]},"stretch-backports":{"architectures":["amd64","arm64","armel","armhf","i386","mips","mips64el","mipsel","ppc64el","s390x"],"components":["main","contrib","non-free"]},"stretch-proposed-updates":{"architectures":["amd64","arm64","armel","armhf","i386","mips","mips64el","mipsel","ppc64el","s390x"],"components":["main","contrib","non-free"]},"stretch":{"architectures":["amd64","arm64","armel","armhf","i386","mips","mips64el","mipsel","ppc64el","s390x"],"components":["main","contrib","non-free"]}}}}},{"distribution":"debian","codename":"jessie","release":"8","suite":"","description":"Debian
+          8.11 Released 23 June
+          2018","mirrors":{"default":{"url":"https://archive.debian.org/debian","pockets":{"jessie-backports-sloppy":{"architectures":["amd64","arm64","armel","armhf","i386","mips","mipsel","powerpc","ppc64el","s390x"],"components":["main","contrib","non-free"]},"jessie-backports":{"architectures":["amd64","arm64","armel","armhf","i386","kfreebsd-amd64","kfreebsd-i386","mips","mipsel","powerpc","ppc64el","s390x"],"components":["main","contrib","non-free"]},"jessie-kfreebsd":{"architectures":["kfreebsd-amd64","kfreebsd-i386"],"components":["main","contrib","non-free"]},"jessie":{"architectures":["amd64","arm64","armel","armhf","i386","mips","mipsel","powerpc","ppc64el","s390x"],"components":["main","contrib","non-free"]}}}}},{"distribution":"debian","codename":"wheezy","release":"7","suite":"","description":"Debian
+          7.11 Released 04 June
+          2016","mirrors":{"default":{"url":"https://archive.debian.org/debian","pockets":{"wheezy-backports-sloppy":{"architectures":["amd64","armel","armhf","i386","ia64","kfreebsd-amd64","kfreebsd-i386","mips","mipsel","powerpc","s390","s390x","sparc"],"components":["main","contrib","non-free"]},"wheezy-backports":{"architectures":["amd64","armel","armhf","i386","ia64","kfreebsd-amd64","kfreebsd-i386","mips","mipsel","powerpc","s390","s390x","sparc"],"components":["main","contrib","non-free"]},"wheezy":{"architectures":["amd64","armel","armhf","i386","ia64","kfreebsd-amd64","kfreebsd-i386","mips","mipsel","powerpc","s390","s390x","sparc"],"components":["main","contrib","non-free"]}}}}},{"distribution":"debian","codename":"squeeze","release":"6","suite":"","description":"Debian
+          6.0.10 Released 19 July
+          2014","mirrors":{"default":{"url":"https://archive.debian.org/debian","pockets":{"squeeze-lts":{"architectures":["amd64","i386"],"components":["main","contrib","non-free"]},"squeeze-proposed-updates":{"architectures":["amd64","armel","i386","ia64","kfreebsd-amd64","kfreebsd-i386","mips","mipsel","powerpc","s390","sparc"],"components":["main","contrib","non-free"]},"squeeze":{"architectures":["amd64","armel","i386","ia64","kfreebsd-amd64","kfreebsd-i386","mips","mipsel","powerpc","s390","sparc"],"components":["main","contrib","non-free"]}}}}},{"distribution":"debian","codename":"lenny","release":"5","suite":"","description":"Debian
+          5.0.10 Released 10 March
+          2012","mirrors":{"default":{"url":"https://archive.debian.org/debian","pockets":{"lenny":{"architectures":["alpha","amd64","arm","armel","hppa","i386","ia64","mips","mipsel","powerpc","s390","sparc"],"components":["main","contrib","non-free"]}}}}}]
+
+      run: echo "json=$(echo $RELEASE_INFO_JSON)" >> $GITHUB_OUTPUT

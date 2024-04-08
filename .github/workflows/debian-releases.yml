@@ -1,0 +1,51 @@
+name: Debian Releases
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate Output
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Install jq
+        run: |
+          if ! which jq; then
+            sudo apt-get update --quiet
+            sudo apt-get install --no-install-recommends --yes jq
+          fi
+          jq --version
+      - name: Regenerate release info
+        id: regenerate
+        run: |
+          full_json="$(./debian-releases/buildinfo.sh)"
+          echo "::group::Regenerated JSON"
+          echo "${full_json}" | jq
+          echo "::endgroup::"
+          echo 'json='"${full_json}" >> "${GITHUB_OUTPUT}"
+
+      - name: Hardcoded release info
+        id: hardcoded
+        uses: ./debian-releases
+
+      - name: Diff
+        env:
+          RELEASE_INFO_REGEN: ${{ steps.regenerate.outputs.json }}
+          RELEASE_INFO_HARDCODED: ${{ steps.hardcoded.outputs.json }}
+        run: |
+          echo "${RELEASE_INFO_REGEN}" | jq -M --sort-keys . > regen.json
+          echo "${RELEASE_INFO_HARDCODED}" | jq -M --sort-keys . > hardcoded.json
+          diff -Nu ./regen.json ./hardcoded.json
