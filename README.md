@@ -8,6 +8,7 @@ Collection of useful GitHub Actions for personal use.
 ## Actions
 
 - [Debian Releases](debian-releases/README.md)
+- [Ubuntu Releases](ubuntu-releases/README.md)
 
 ## License
 
