@@ -36,6 +36,14 @@ Output `json` object format:
     "codename": "sid"
     "description": "Debian x.y Unstable - Not Released"
     "release": "98"
+    "//": "merge from all pockets"
+    "architectures": [
+      'all', 'amd64', ...
+    ]
+    "//": "merge from all pockets"
+    "components": [
+      'main', 'contrib', 'non-free-firmware', 'non-free'
+    ]
     "mirrors": [
       {
         "name": "default"

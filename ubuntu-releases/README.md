@@ -38,6 +38,14 @@ Output `json` object format:
     "codename": "noble"
     "description": "Ubuntu Noble 24.04"
     "release": "24.04"
+    "//": "merge from all pockets"
+    "architectures": [
+      "amd64", "i386", ...
+    ]
+    "//": "merge from all pockets"
+    "components": [
+      "main", "restricted", "universe", "multiverse"
+    ]
     "mirrors": [
       {
         "name": "default"
