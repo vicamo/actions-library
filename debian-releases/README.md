@@ -35,6 +35,7 @@ Output `json` object format:
     "suite": "unstable"
     "codename": "sid"
     "description": "Debian x.y Unstable - Not Released"
+    "active": true
     "release": "98"
     "//": "merge from all pockets"
     "architectures": [
