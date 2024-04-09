@@ -106,6 +106,10 @@ for codename in $(echo "${full_json}" | jq -c -M -r '.[] | .codename'); do
 
   suite_json="$(echo "${suite_json}" |
     jq -c -M ". + {\"mirrors\":${mirrors_json}}")"
+  suite_json="$(echo "${suite_json}" |
+    jq -c -M '. + {architectures: [.mirrors[].pockets[].architectures[]] | unique}')"
+  suite_json="$(echo "${suite_json}" |
+    jq -c -M '. + {components: [.mirrors[].pockets[].components[]] | unique}')"
 
   full_json="$(echo "${full_json}" |
     jq -c -M "[.[] | select(.codename == \"${codename}\") |= ${suite_json}]")"
