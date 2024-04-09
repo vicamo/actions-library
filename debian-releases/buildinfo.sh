@@ -80,12 +80,12 @@ for codename in $(echo "${full_json}" | jq -c -M -r '.[] | .codename'); do
     jq -c -M ".[] | select(.codename == \"${codename}\") | . + {\"suite\":\"${suite}\",\"description\":\"${desc}\"}")"
 
   pockets_json="$(build_pockets "${mirror_url}" "${codename}")"
-  mirrors_json="{\"default\":{\"url\":\"${mirror_url}\",\"pockets\":${pockets_json}}}"
+  mirrors_json="[{\"name\":\"default\",\"url\":\"${mirror_url}\",\"pockets\":${pockets_json}}]"
 
   if [ "${codename}" = "sid" ]; then
     pockets_json="$(build_pockets "${PORTS_MIRROR_URL}" "${codename}")"
     mirrors_json="$(echo "${mirrors_json}" |
-      jq -c -M ". + {\"ports\":{\"url\":\"${PORTS_MIRROR_URL}\",\"pockets\":${pockets_json}}}")"
+      jq -c -M ". + [{\"name\":\"ports\",\"url\":\"${PORTS_MIRROR_URL}\",\"pockets\":${pockets_json}}]")"
   fi
 
   suite_json="$(echo "${suite_json}" |
