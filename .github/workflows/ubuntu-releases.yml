@@ -1,4 +1,4 @@
-name: Debian Releases
+name: Ubuntu Releases
 
 on:
   pull_request:
@@ -31,7 +31,7 @@ jobs:
       - name: Regenerate release info
         id: regenerate
         run: |
-          full_json="$(./debian-releases/buildinfo.sh)"
+          full_json="$(./ubuntu-releases/buildinfo.sh)"
           echo "::group::Regenerated JSON"
           echo "${full_json}" | jq
           echo "::endgroup::"
@@ -39,7 +39,7 @@ jobs:
 
       - name: Hardcoded release info
         id: hardcoded
-        uses: ./debian-releases
+        uses: ./ubuntu-releases
 
       - name: Diff
         env:

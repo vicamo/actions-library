@@ -1,13 +1,13 @@
-# Debian Releases
+# Ubuntu Releases
 
-[![Debian Releases](https://github.com/vicamo/actions-library/actions/workflows/debian-releases.yml/badge.svg)](https://github.com/vicamo/actions-library/actions/workflows/debian-releases.yml)
+[![Ubuntu Releases](https://github.com/vicamo/actions-library/actions/workflows/ubuntu-releases.yml/badge.svg)](https://github.com/vicamo/actions-library/actions/workflows/ubuntu-releases.yml)
 
 ## Usage
 
 <!-- start usage -->
 
 ```yaml
-- uses: vicamo/actions-library/debian-releases@v1
+- uses: vicamo/actions-library/ubuntu-releases@v1
   id: dr
 - env:
     RELEASE_INFO_JSON: ${{ steps.dr.outputs.json }}
@@ -28,37 +28,40 @@ The following outputs are available:
 
 Output `json` object format:
 
+<!-- markdownlint-disable MD013 -->
+
 ```json
 [
   {
-    "distribution": "debian",
-    "suite": "unstable"
-    "codename": "sid"
-    "description": "Debian x.y Unstable - Not Released"
-    "release": "98"
+    "distribution": "ubuntu",
+    "suite": "devel"
+    "codename": "noble"
+    "description": "Ubuntu Noble 24.04"
+    "release": "24.04"
     "mirrors": [
       {
         "name": "default"
-        "url": "https://deb.debian.org/debian"
+        "url": "http://archive.ubuntu.com/ubuntu"
         "pockets": {
-          "//": "trixie, trixie-updates, etc"
-          "sid": {
+          "//": "noble-backports, noble-proposed, noble-updates, noble-security, etc."
+          "noble": {
             "architectures": [
-              "all", "amd64", "arm64", "armel", "armhf", "i386", "mips64el",
-              "ppc64el", "riscv64", "s390x"
+              "amd64","i386"
             ]
             "components": [
-              "main", "contrib", "non-free-firmware", "non-free"
+              "main","restricted","universe","multiverse"
             ]
           }
         }
       },
       {
         "name": "ports"
-        "url": "http://ftp.ports.debian.org/debian-ports"
+        "url": "http://ports.ubuntu.com/ubuntu-ports"
         "//": "same layout as the default mirror"
       }
     ]
   }
 ]
 ```
+
+<!-- markdownlint-enable MD013 -->

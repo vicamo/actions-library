@@ -6,6 +6,23 @@ readonly DEFAULT_MIRROR_URL=https://deb.debian.org/debian
 readonly ARCHIVE_MIRROR_URL=https://archive.debian.org/debian
 readonly PORTS_MIRROR_URL=http://ftp.ports.debian.org/debian-ports
 
+declare -A mirror_pockets
+function get_pockets_for_mirror() {
+  local mirror_url=$1
+  shift
+  local content
+
+  content="${mirror_pockets["${mirror_url}"]:-}"
+  if [ -z "${content}" ]; then
+    content="$(wget -q -O - "${mirror_url}/dists" |
+      grep -E 'href="[A-Za-z0-9-]+/"' |
+      sed 's,.* href="\([^"]\+\)/".*,\1,' | tr '\n' ' ')"
+    mirror_pockets["${mirror_url}"]="${content}"
+  fi
+
+  echo "${content}"
+}
+
 function build_pockets() {
   local mirror_url=$1
   shift
@@ -13,9 +30,7 @@ function build_pockets() {
   shift
 
   local pockets_json="{}"
-  read -r -a pockets <<<"$(wget -q -O - "${mirror_url}/dists" |
-    grep -E 'href="[A-Za-z0-9-]+/"' |
-    sed 's,.* href="\([^"]\+\)/".*,\1,' | tr '\n' ' ')"
+  read -r -a pockets <<<"$(get_pockets_for_mirror "${mirror_url}")"
 
   local pockets_json="{}"
   for pocket in "${pockets[@]}"; do
