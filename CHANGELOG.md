@@ -2,6 +2,13 @@
 
 # Changelog
 
+## [1.1.2](https://github.com/vicamo/actions-library/compare/v1.1.1...v1.1.2) (2024-04-09)
+
+### 🐛 Bugfixes
+
+- remove 'all' from merged architectures
+  ([f371fc9](https://github.com/vicamo/actions-library/commit/f371fc94343993a7bbd0dcabcc18fbb884e08442))
+
 ## [1.1.1](https://github.com/vicamo/actions-library/compare/v1.1.0...v1.1.1) (2024-04-09)
 
 ### 🐛 Bugfixes
