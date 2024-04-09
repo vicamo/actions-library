@@ -36,8 +36,9 @@ Output `json` object format:
     "codename": "sid"
     "description": "Debian x.y Unstable - Not Released"
     "release": "98"
-    "mirrors": {
-      "default": {
+    "mirrors": [
+      {
+        "name": "default"
         "url": "https://deb.debian.org/debian"
         "pockets": {
           "//": "trixie, trixie-updates, etc"
@@ -51,12 +52,13 @@ Output `json` object format:
             ]
           }
         }
-      }
-      "ports": {
+      },
+      {
+        "name": "ports"
         "url": "http://ftp.ports.debian.org/debian-ports"
         "//": "same layout as the default mirror"
       }
-    }
+    ]
   }
 ]
 ```
