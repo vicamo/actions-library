@@ -1,4 +1,13 @@
+<!-- markdownlint-disable MD013 MD024 -->
+
 # Changelog
+
+## [1.1.0](https://github.com/vicamo/actions-library/compare/v1.0.0...v1.1.0) (2024-04-09)
+
+### 🚀 Features
+
+- add ubuntu-releases action
+  ([3602910](https://github.com/vicamo/actions-library/commit/36029107026dba798d455566590539e67ce2e237))
 
 ## 1.0.0 (2024-04-08)
 
