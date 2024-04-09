@@ -83,6 +83,9 @@ for codename in $(echo "${full_json}" | jq -c -M -r '.[] | .codename'); do
     fi
   done
 
+  active=false
+  [ "${mirror_url}" != "${DEFAULT_MIRROR_URL}" ] || active=true
+
   suite="$(echo "${content}" | awk '/^Suite:/ {print $2}')"
   sc="$({ wget -q -O - "${mirror_url}/dists/${suite}/Release" | grep -v '^ '; } || true)"
   sc_codename="$(echo "${sc}" | awk '/^Codename:/ {print $2}')"
@@ -92,7 +95,7 @@ for codename in $(echo "${full_json}" | jq -c -M -r '.[] | .codename'); do
 
   desc="$(echo "${content}" | grep -E '^Description:' | cut -d ' ' -f 2-)"
   suite_json="$(echo "${full_json}" |
-    jq -c -M ".[] | select(.codename == \"${codename}\") | . + {\"suite\":\"${suite}\",\"description\":\"${desc}\"}")"
+    jq -c -M ".[] | select(.codename == \"${codename}\") | . + {\"suite\":\"${suite}\",\"description\":\"${desc}\",\"active\":${active}}")"
 
   pockets_json="$(build_pockets "${mirror_url}" "${codename}")"
   mirrors_json="[{\"name\":\"default\",\"url\":\"${mirror_url}\",\"pockets\":${pockets_json}}]"

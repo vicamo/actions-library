@@ -37,6 +37,7 @@ Output `json` object format:
     "suite": "devel"
     "codename": "noble"
     "description": "Ubuntu Noble 24.04"
+    "active": true
     "release": "24.04"
     "//": "merge from all pockets"
     "architectures": [

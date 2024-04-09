@@ -72,7 +72,7 @@ function build_pockets() {
 }
 
 full_json="$(wget -q -O - "${LP_SERIES_API_URL}" |
-  jq -c -M '[.entries[] | {"distribution":"ubuntu","codename":.name,"release":.version}]')"
+  jq -c -M '[.entries[] | {"distribution":"ubuntu","codename":.name,"release":.version,"active":.active}]')"
 
 content="$({ wget -q -O - "${DEFAULT_MIRROR_URL}/dists/devel/Release" | grep -v '^ '; } || true)"
 devel="$(echo "${content}" | awk '/^Codename:/ {print $2}')"
