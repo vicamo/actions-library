@@ -2,6 +2,15 @@
 
 # Changelog
 
+## [1.1.1](https://github.com/vicamo/actions-library/compare/v1.1.0...v1.1.1) (2024-04-09)
+
+### 🐛 Bugfixes
+
+- Add active field
+  ([cdad00a](https://github.com/vicamo/actions-library/commit/cdad00a0949d1ea8ddee5615767050a4f447181a))
+- Add merged architectures/components fields
+  ([7028fb1](https://github.com/vicamo/actions-library/commit/7028fb1891a87fbffb6c705cfa7d544145f71c7b))
+
 ## [1.1.0](https://github.com/vicamo/actions-library/compare/v1.0.0...v1.1.0) (2024-04-09)
 
 ### 🚀 Features
