@@ -37,13 +37,14 @@ Output `json` object format:
     "description": "Debian x.y Unstable - Not Released"
     "active": true
     "release": "98"
-    "//": "merge from all pockets"
+    "//": "merge from all pockets, 'all' will be removed."
     "architectures": [
-      'all', 'amd64', ...
+      "amd64", "arm64", "armel", "armhf", "i386", "mips64el", "ppc64el",
+      "riscv64", "s390x"
     ]
     "//": "merge from all pockets"
     "components": [
-      'main', 'contrib', 'non-free-firmware', 'non-free'
+      "main", "contrib", "non-free-firmware", "non-free"
     ]
     "mirrors": [
       {
