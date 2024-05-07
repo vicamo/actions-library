@@ -2,6 +2,13 @@
 
 # Changelog
 
+## [1.2.0](https://github.com/vicamo/actions-library/compare/v1.1.2...v1.2.0) (2024-05-07)
+
+### 🚀 Features
+
+- add Ubuntu Oracular Oriole 24.10
+  ([9d9262f](https://github.com/vicamo/actions-library/commit/9d9262f4324048855808477d69826af4d4fdee6b))
+
 ## [1.1.2](https://github.com/vicamo/actions-library/compare/v1.1.1...v1.1.2) (2024-04-09)
 
 ### 🐛 Bugfixes
