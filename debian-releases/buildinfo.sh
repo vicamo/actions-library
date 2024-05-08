@@ -93,9 +93,30 @@ for codename in $(echo "${full_json}" | jq -c -M -r '.[] | .codename'); do
     suite=
   fi
 
+  status=Obsolete
+  case "${active}/${suite}" in
+  true/unstable) status="Active Development" ;;
+  true/testing) status="Future" ;;
+  true/stable) status="Current Stable Release" ;;
+  true/*)
+    if [ "${codename}" = "experimental" ]; then
+      status="Experimental"
+    else
+      status="Supported"
+    fi
+    ;;
+  esac
+
   desc="$(echo "${content}" | grep -E '^Description:' | cut -d ' ' -f 2-)"
   suite_json="$(echo "${full_json}" |
-    jq -c -M ".[] | select(.codename == \"${codename}\") | . + {\"suite\":\"${suite}\",\"description\":\"${desc}\",\"active\":${active}}")"
+    jq -c -M ".[] |
+              select(.codename == \"${codename}\") |
+              . + {
+                \"suite\":\"${suite}\",
+                \"description\":\"${desc}\",
+                \"active\":${active},
+                \"status\":\"${status}\"
+              }")"
 
   pockets_json="$(build_pockets "${mirror_url}" "${codename}")"
   mirrors_json="[{\"name\":\"default\",\"url\":\"${mirror_url}\",\"pockets\":${pockets_json}}]"

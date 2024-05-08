@@ -74,6 +74,13 @@ function build_pockets() {
 full_json="$(wget -q -O - "${LP_SERIES_API_URL}" |
   jq -c -M '[.entries[] | {"distribution":"ubuntu","codename":.name,"release":.version}]')"
 
+stable="$(echo "${full_json}" |
+          jq -r -c -M '.[1:] |
+                       map(select(.release |
+                                  sub("(?<r>[0-9]+).*"; "\(.r)") |
+                                  tonumber | ((. % 2) == 0))) |
+                       .[0].codename')"
+
 content="$({ wget -q -O - "${DEFAULT_MIRROR_URL}/dists/devel/Release" | grep -v '^ '; } || true)"
 devel="$(echo "${content}" | awk '/^Codename:/ {print $2}')"
 
@@ -92,7 +99,16 @@ for codename in $(echo "${full_json}" | jq -c -M -r '.[] | .codename'); do
   suite=
   if [ "${codename}" = "${devel}" ]; then
     suite="devel"
+  elif [ "${codename}" = "${stable}" ]; then
+    suite="stable"
   fi
+
+  status=Obsolete
+  case "${active}/${suite}" in
+  true/devel) status="Active Development" ;;
+  true/stable) status="Current Stable Release" ;;
+  true/*) status="Supported" ;;
+  esac
 
   desc="$(echo "${content}" | grep -E '^Description:' | cut -d ' ' -f 2-)"
   suite_json="$(echo "${full_json}" |
@@ -101,7 +117,8 @@ for codename in $(echo "${full_json}" | jq -c -M -r '.[] | .codename'); do
               . + {
                 \"suite\":\"${suite}\",
                 \"description\":\"${desc}\",
-                \"active\":${active}
+                \"active\":${active},
+                \"status\":\"${status}\"
               }")"
 
   pockets_json="$(build_pockets "${mirror_url}" "${codename}")"
