@@ -2,6 +2,18 @@
 
 # Changelog
 
+## [1.3.0](https://github.com/vicamo/actions-library/compare/v1.2.0...v1.3.0) (2024-05-08)
+
+### 🚀 Features
+
+- Add a status field
+  ([8bbf3ad](https://github.com/vicamo/actions-library/commit/8bbf3ada07301a2fdebe56d0c80b63c64cd29cdf))
+
+### 🐛 Bugfixes
+
+- sync meaning of active field to debian
+  ([9bf4235](https://github.com/vicamo/actions-library/commit/9bf42351a90c30f2a7394673bf350d61ba798a74))
+
 ## [1.2.0](https://github.com/vicamo/actions-library/compare/v1.1.2...v1.2.0) (2024-05-07)
 
 ### 🚀 Features
