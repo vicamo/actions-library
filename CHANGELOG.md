@@ -2,6 +2,15 @@
 
 # Changelog
 
+## [1.3.1](https://github.com/vicamo/actions-library/compare/v1.3.0...v1.3.1) (2024-05-12)
+
+### 🐛 Bugfixes
+
+- add armhf to ubuntu oracular
+  ([5dc1a8b](https://github.com/vicamo/actions-library/commit/5dc1a8b9f72a6a5a420d352696143aef8e9b1320))
+- add riscv64 to debian trixie
+  ([9b2cc53](https://github.com/vicamo/actions-library/commit/9b2cc53a7c81b636ede2fbc654441c28031b6186))
+
 ## [1.3.0](https://github.com/vicamo/actions-library/compare/v1.2.0...v1.3.0) (2024-05-08)
 
 ### 🚀 Features
