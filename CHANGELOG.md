@@ -2,6 +2,18 @@
 
 # Changelog
 
+## [1.4.0](https://github.com/vicamo/actions-library/compare/v1.3.1...v1.4.0) (2024-07-11)
+
+### 🚀 Features
+
+- update Debian releases
+  ([0de71c2](https://github.com/vicamo/actions-library/commit/0de71c252d73a0d0c78c882ab3ff7170f6ad75cb))
+
+### 🐛 Bugfixes
+
+- correct branding color
+  ([dbb4ca7](https://github.com/vicamo/actions-library/commit/dbb4ca7bb3eb8520ac93ad16a8872c4f1cfc362b))
+
 ## [1.3.1](https://github.com/vicamo/actions-library/compare/v1.3.0...v1.3.1) (2024-05-12)
 
 ### 🐛 Bugfixes
