@@ -2,7 +2,7 @@ name: 'Debian Releases'
 description: 'Fetch debian releases info'
 branding:
   icon: 'target'
-  color: 'read'
+  color: 'red'
 
 outputs:
   json:
