@@ -2,6 +2,25 @@
 
 # Changelog
 
+## [1.5.0](https://github.com/vicamo/actions-library/compare/v1.4.0...v1.5.0) (2024-10-07)
+
+### 🚀 Features
+
+- update Debian releases
+  ([074a3e6](https://github.com/vicamo/actions-library/commit/074a3e610f085124c9f88939576e38191bb6c990))
+- update Ubuntu releases
+  ([ab0ed68](https://github.com/vicamo/actions-library/commit/ab0ed683026bbb2b85659acf40b2dc0006fcedf0))
+
+### 🐛 Bugfixes
+
+- remove redundant ts file
+  ([ed375c1](https://github.com/vicamo/actions-library/commit/ed375c1460ba18353fd476780b4c98094a94371a))
+
+### 🧰 Maintenance
+
+- **deps:** bump super-linter/super-linter from 6 to 7
+  ([36f72a9](https://github.com/vicamo/actions-library/commit/36f72a952457d2df9fcdfcf2e2a0bf6a070b05b4))
+
 ## [1.4.0](https://github.com/vicamo/actions-library/compare/v1.3.1...v1.4.0) (2024-07-11)
 
 ### 🚀 Features
