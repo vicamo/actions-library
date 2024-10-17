@@ -2,6 +2,18 @@
 
 # Changelog
 
+## [1.6.0](https://github.com/vicamo/actions-library/compare/v1.5.0...v1.6.0) (2024-10-17)
+
+### 🚀 Features
+
+- add Ubuntu Plucky Puffin 25.04
+  ([bb2cecd](https://github.com/vicamo/actions-library/commit/bb2cecd08da5c677915e85bdb03d5f8fd07fd2c9))
+
+### 🧰 Testing
+
+- save json files for further investigation
+  ([8318669](https://github.com/vicamo/actions-library/commit/83186696566a4d772765dc6bc974bb1c4e11a09f))
+
 ## [1.5.0](https://github.com/vicamo/actions-library/compare/v1.4.0...v1.5.0) (2024-10-07)
 
 ### 🚀 Features
