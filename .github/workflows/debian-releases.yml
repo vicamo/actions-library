@@ -52,3 +52,12 @@ jobs:
           echo "${RELEASE_INFO_REGEN}" | jq -M --sort-keys . > regen.json
           echo "${RELEASE_INFO_HARDCODED}" | jq -M --sort-keys . > hardcoded.json
           diff -Nu ./regen.json ./hardcoded.json
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ failure() }}
+        with:
+          name: debian-releases-jsons
+          retention-days: 7
+          path: |
+            regen.json
+            hardcoded.json
