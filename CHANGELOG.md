@@ -2,6 +2,20 @@
 
 # Changelog
 
+## [1.7.0](https://github.com/vicamo/actions-library/compare/v1.6.0...v1.7.0) (2025-01-23)
+
+### 🚀 Features
+
+- update Ubuntu releases
+  ([7adb349](https://github.com/vicamo/actions-library/commit/7adb3497b2ec95074c3818179c9ff98aa1aa3c27))
+
+### 🐛 Bugfixes
+
+- update debian stable release description
+  ([8cd387e](https://github.com/vicamo/actions-library/commit/8cd387e5abc5cc12e98b0a7a4be01f4c20714d44))
+- update debian stable release description
+  ([0c66d21](https://github.com/vicamo/actions-library/commit/0c66d210fcd25d2814615db41a9023ef775c8f8f))
+
 ## [1.6.0](https://github.com/vicamo/actions-library/compare/v1.5.0...v1.6.0) (2024-10-17)
 
 ### 🚀 Features
