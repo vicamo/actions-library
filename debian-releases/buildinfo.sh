@@ -69,7 +69,13 @@ full_json=$(
   {"distribution":"debian","codename":"jessie","release":"8"},
   {"distribution":"debian","codename":"wheezy","release":"7"},
   {"distribution":"debian","codename":"squeeze","release":"6"},
-  {"distribution":"debian","codename":"lenny","release":"5"}
+  {"distribution":"debian","codename":"lenny","release":"5"},
+  {"distribution":"debian","codename":"etch","release":"4"},
+  {"distribution":"debian","codename":"sarge","release":"3.1"},
+  {"distribution":"debian","codename":"woody","release":"3"},
+  {"distribution":"debian","codename":"potato","release":"2.2"},
+  {"distribution":"debian","codename":"slink","release":"2.1"},
+  {"distribution":"debian","codename":"hamm","release":"2"}
 ]
 EOL
 )
