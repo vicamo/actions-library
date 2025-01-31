@@ -2,6 +2,18 @@
 
 # Changelog
 
+## [1.8.0](https://github.com/vicamo/actions-library/compare/v1.7.0...v1.8.0) (2025-01-31)
+
+### 🚀 Features
+
+- add all Debian releases
+  ([6200159](https://github.com/vicamo/actions-library/commit/62001598fe99317797fa6be1e47fbca61f6e755c))
+
+### 🧰 Testing
+
+- migrate to googleapis/release-please-action
+  ([db1dc01](https://github.com/vicamo/actions-library/commit/db1dc01806c8be639fe726abbf18fce607d0fed0))
+
 ## [1.7.0](https://github.com/vicamo/actions-library/compare/v1.6.0...v1.7.0) (2025-01-23)
 
 ### 🚀 Features
