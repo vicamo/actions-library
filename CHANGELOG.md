@@ -2,6 +2,15 @@
 
 # Changelog
 
+## [1.8.1](https://github.com/vicamo/actions-library/compare/v1.8.0...v1.8.1) (2025-04-04)
+
+### 🐛 Bugfixes
+
+- update bookworm to 12.10
+  ([08222aa](https://github.com/vicamo/actions-library/commit/08222aab0fa235a06d60bd9ed02ae25c21d141ae))
+- update bookworm to 12.10
+  ([87b0756](https://github.com/vicamo/actions-library/commit/87b07560f78afd5772545cf76bf1ed5e7c94291e))
+
 ## [1.8.0](https://github.com/vicamo/actions-library/compare/v1.7.0...v1.8.0) (2025-01-31)
 
 ### 🚀 Features
