@@ -2,6 +2,15 @@
 
 # Changelog
 
+## [1.9.0](https://github.com/vicamo/actions-library/compare/v1.8.1...v1.9.0) (2025-04-26)
+
+### 🚀 Features
+
+- add Ubuntu Questing Quokka 25.10
+  ([70d8950](https://github.com/vicamo/actions-library/commit/70d8950a2d4eddf7de5131aa9046fb981e8217eb))
+- add Ubuntu Questing Quokka 25.10
+  ([6cde64f](https://github.com/vicamo/actions-library/commit/6cde64f070371b88c4aa21031ca1d25cd6fabb2c))
+
 ## [1.8.1](https://github.com/vicamo/actions-library/compare/v1.8.0...v1.8.1) (2025-04-04)
 
 ### 🐛 Bugfixes
