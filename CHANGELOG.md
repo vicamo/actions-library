@@ -2,6 +2,13 @@
 
 # Changelog
 
+## [1.10.0](https://github.com/vicamo/actions-library/compare/v1.9.0...v1.10.0) (2025-06-30)
+
+### 🚀 Features
+
+- update Debian 12.11 releases
+  ([1c1e365](https://github.com/vicamo/actions-library/commit/1c1e36553065760869ab39ea9f1f44bb54cbfa9c))
+
 ## [1.9.0](https://github.com/vicamo/actions-library/compare/v1.8.1...v1.9.0) (2025-04-26)
 
 ### 🚀 Features
