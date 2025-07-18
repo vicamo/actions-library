@@ -4,9 +4,15 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - 'debian-releases/**'
+      - '!debian-releases/*.md'
   push:
     branches:
       - main
+    paths:
+      - 'debian-releases/**'
+      - '!debian-releases/*.md'
   schedule:
     - cron: '30 3 * * 6'
   workflow_dispatch:

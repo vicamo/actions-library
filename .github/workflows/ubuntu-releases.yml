@@ -4,9 +4,15 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - 'ubuntu-releases/**'
+      - '!ubuntu-releases/*.md'
   push:
     branches:
       - main
+    paths:
+      - 'ubuntu-releases/**'
+      - '!ubuntu-releases/*.md'
   schedule:
     - cron: '0 4 * * 6'
   workflow_dispatch:
