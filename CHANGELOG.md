@@ -62,7 +62,7 @@
 
 ### 🧰 Testing
 
-- save json files for further investigation
+- save JSON files for further investigation
   ([8318669](https://github.com/vicamo/actions-library/commit/83186696566a4d772765dc6bc974bb1c4e11a09f))
 
 ## [1.5.0](https://github.com/vicamo/actions-library/compare/v1.4.0...v1.5.0) (2024-10-07)
@@ -100,7 +100,7 @@
 
 ### 🐛 Bugfixes
 
-- add armhf to ubuntu oracular
+- add armhf to Ubuntu oracular
   ([5dc1a8b](https://github.com/vicamo/actions-library/commit/5dc1a8b9f72a6a5a420d352696143aef8e9b1320))
 - add riscv64 to debian trixie
   ([9b2cc53](https://github.com/vicamo/actions-library/commit/9b2cc53a7c81b636ede2fbc654441c28031b6186))
