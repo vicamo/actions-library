@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [1.11.0](https://github.com/vicamo/actions-library/compare/v1.10.0...v1.11.0) (2025-08-20)
+
+### 🚀 Features
+
+- update Debian 13.0 releases
+  ([b365afa](https://github.com/vicamo/actions-library/commit/b365afa92db5a4a069b3dbe3402e13514f4ec8b4))
+- update Debian 13.0 releases
+  ([6979c81](https://github.com/vicamo/actions-library/commit/6979c812f1253a6250cc95c519928a51e728ffde))
+
+### 🐛 Bugfixes
+
+- Super-linter NATURAL_LANGUAGE errors
+  ([6fbc2a9](https://github.com/vicamo/actions-library/commit/6fbc2a9c3785fbec639bf354b69f99c6340bd2b1))
+
+### 🧰 Maintenance
+
+- **deps:** bump actions/checkout from 4 to 5
+  ([95be66b](https://github.com/vicamo/actions-library/commit/95be66bb846250758bf98aff1e1211a467442fed))
+- **deps:** bump actions/checkout from 4 to 5
+  ([efb80a4](https://github.com/vicamo/actions-library/commit/efb80a4a6e7311d08c379216641eafb7c6c665ae))
+- **deps:** bump super-linter/super-linter from 7 to 8
+  ([ff6535e](https://github.com/vicamo/actions-library/commit/ff6535e760ce9a56bd8b57abe27f2054edaafaec))
+- **deps:** bump super-linter/super-linter from 7 to 8
+  ([92fb3fe](https://github.com/vicamo/actions-library/commit/92fb3fed1cc3a0ff99e6eaf20903d51ce7e94571))
+
 ## [1.10.0](https://github.com/vicamo/actions-library/compare/v1.9.0...v1.10.0) (2025-06-30)
 
 ### 🚀 Features
