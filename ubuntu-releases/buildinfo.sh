@@ -43,19 +43,14 @@ function build_pockets() {
 
       content="$({ wget -q -O - "${mirror_url}/dists/${pocket}/Release" | grep -v '^ '; } || true)"
 
-      read -r -a arches <<<"$(echo "${content}" |
+      read -r -a declared_arches <<<"$(echo "${content}" |
         awk '/^Architectures:/ {$1=""; $0=$0; print $0}')"
-      case "${mirror_url}" in
-      "${DEFAULT_MIRROR_URL}") # default mirror has only amd64 and i386
-        arches=(amd64 i386)
-        ;;
-      "${PORTS_MIRROR_URL}") # ports mirror has all declared but amd64 and i386
-        # shellcheck disable=SC2001
-        # shellcheck disable=SC2206
-        # shellcheck disable=SC2207
-        arches=( $(echo "${arches[@]}" | sed 's,\(amd64\|i386\) ,,g') )
-        ;;
-      esac
+      arches=()
+      for arch in "${declared_arches[@]}"; do
+        if wget --spider -q "${mirror_url}/dists/${pocket}/main/binary-${arch}/Release"; then
+          arches+=("${arch}")
+        fi
+      done
       arches_json="$(jq -c -M -n '$ARGS.positional' --args "${arches[@]}")"
 
       read -r -a comps <<<"$(echo "${content}" |
