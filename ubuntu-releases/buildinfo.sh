@@ -50,10 +50,10 @@ function build_pockets() {
         arches=(amd64 i386)
         ;;
       "${PORTS_MIRROR_URL}") # ports mirror has all declared but amd64 and i386
+        # shellcheck disable=SC2001
         # shellcheck disable=SC2206
-        arches=(${arches[@]/amd64})
-        # shellcheck disable=SC2206
-        arches=(${arches[@]/i386})
+        # shellcheck disable=SC2207
+        arches=( $(echo "${arches[@]}" | sed 's,\(amd64\|i386\) ,,g') )
         ;;
       esac
       arches_json="$(jq -c -M -n '$ARGS.positional' --args "${arches[@]}")"
