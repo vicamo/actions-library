@@ -2,6 +2,24 @@
 
 # Changelog
 
+## [1.12.0](https://github.com/vicamo/actions-library/compare/v1.11.0...v1.12.0) (2025-10-14)
+
+### 🚀 Features
+
+- add Ubuntu 26.04 Resolute Raccoon
+  ([47e3719](https://github.com/vicamo/actions-library/commit/47e371947acd6105974bf7e565109890ad210462))
+- update Debian 13.1 and 12.12 releases
+  ([2576e89](https://github.com/vicamo/actions-library/commit/2576e899a1362079bc35d0243637e5d7dc814934))
+
+### 🧰 Testing
+
+- disable BIOME linter/formatter
+  ([7cff1d5](https://github.com/vicamo/actions-library/commit/7cff1d558daee12bc3b1a8954fa60f0437615622))
+- disable BIOME linter/formatter
+  ([04c84e9](https://github.com/vicamo/actions-library/commit/04c84e9d14d909437d1aa8fd50fecfc2a553ef29))
+- linter: disable Zizmor
+  ([5ff0122](https://github.com/vicamo/actions-library/commit/5ff0122886d056a2c2b1b170411f227e77ac0eae))
+
 ## [1.11.0](https://github.com/vicamo/actions-library/compare/v1.10.0...v1.11.0) (2025-08-20)
 
 ### 🚀 Features
