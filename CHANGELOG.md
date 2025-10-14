@@ -2,6 +2,15 @@
 
 # Changelog
 
+## [1.12.1](https://github.com/vicamo/actions-library/compare/v1.12.0...v1.12.1) (2025-10-14)
+
+### 🐛 Bugfixes
+
+- correct amd64v3 arch name
+  ([84ceb17](https://github.com/vicamo/actions-library/commit/84ceb1769cc91bec0e6682d94df29dec744b5cf7))
+- correct amd64v3 arch name
+  ([8d64e4b](https://github.com/vicamo/actions-library/commit/8d64e4b265607804b86fa1997165d62c60decf7d))
+
 ## [1.12.0](https://github.com/vicamo/actions-library/compare/v1.11.0...v1.12.0) (2025-10-14)
 
 ### 🚀 Features
