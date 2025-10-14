@@ -2,6 +2,15 @@
 
 # Changelog
 
+## [1.12.2](https://github.com/vicamo/actions-library/compare/v1.12.1...v1.12.2) (2025-10-14)
+
+### 🐛 Bugfixes
+
+- correct mirror pocket architectures
+  ([c2ad866](https://github.com/vicamo/actions-library/commit/c2ad866a62e333a7f3db42a60b13e0a6561b20c4))
+- correct mirror pocket architectures
+  ([c0498e4](https://github.com/vicamo/actions-library/commit/c0498e484406e97a7ad9e8d9c1f53e2fe89341fe))
+
 ## [1.12.1](https://github.com/vicamo/actions-library/compare/v1.12.0...v1.12.1) (2025-10-14)
 
 ### 🐛 Bugfixes
