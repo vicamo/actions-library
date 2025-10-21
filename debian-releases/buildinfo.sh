@@ -61,6 +61,7 @@ full_json=$(
 [
   {"distribution":"debian","codename":"experimental","release":""},
   {"distribution":"debian","codename":"sid","release":""},
+  {"distribution":"debian","codename":"forky","release":"14"},
   {"distribution":"debian","codename":"trixie","release":"13"},
   {"distribution":"debian","codename":"bookworm","release":"12"},
   {"distribution":"debian","codename":"bullseye","release":"11"},
