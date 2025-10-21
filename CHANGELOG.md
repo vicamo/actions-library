@@ -2,6 +2,15 @@
 
 # Changelog
 
+## [1.13.0](https://github.com/vicamo/actions-library/compare/v1.12.2...v1.13.0) (2025-10-21)
+
+### 🚀 Features
+
+- add Debian Forky testing series
+  ([288736f](https://github.com/vicamo/actions-library/commit/288736fe26d1d701121554bb8702eb031831b446))
+- add Debian Forky testing series
+  ([8e6625a](https://github.com/vicamo/actions-library/commit/8e6625a0645e34e43af84b602074b906fdd99215))
+
 ## [1.12.2](https://github.com/vicamo/actions-library/compare/v1.12.1...v1.12.2) (2025-10-14)
 
 ### 🐛 Bugfixes
