@@ -59,7 +59,7 @@ jobs:
           echo "${RELEASE_INFO_HARDCODED}" | jq -M --sort-keys . > hardcoded.json
           diff -Nu ./regen.json ./hardcoded.json
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         if: ${{ failure() }}
         with:
           name: ubuntu-releases-jsons
