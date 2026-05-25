@@ -152,7 +152,7 @@ for codename in $(echo "${full_json}" | jq -c -M -r '.[] | .codename'); do
     jq -c -M '. + {components: [.mirrors[].pockets[].components[]] | unique}')"
 
   full_json="$(echo "${full_json}" |
-    jq -c -M "[.[] | select(.codename == \"${codename}\") |= ${suite_json}]")"
+    jq -c -M -S "[.[] | select(.codename == \"${codename}\") |= ${suite_json}]")"
 done
 
 if [ "${update_action_yml}" = true ]; then
