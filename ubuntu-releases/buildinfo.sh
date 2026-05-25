@@ -158,6 +158,11 @@ replacement = r'\g<1>          ' + new_json + r'\g<2>'
 result = re.sub(pattern, replacement, action, flags=re.DOTALL)
 open(sys.argv[1], 'w').write(result)
 " "${action_yml}" "${full_json}"
+  if command -v prettier > /dev/null 2>&1; then
+    prettier --write "${action_yml}" > /dev/null 2>&1
+  elif command -v npx > /dev/null 2>&1; then
+    npx prettier --write "${action_yml}" > /dev/null 2>&1
+  fi
 fi
 
 echo "${full_json}"
