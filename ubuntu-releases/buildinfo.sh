@@ -2,6 +2,16 @@
 
 set -e
 
+update_action_yml=false
+while [ $# -gt 0 ]; do
+  case "$1" in
+  --update-action-yml) update_action_yml=true; shift ;;
+  *) echo "Unknown option: $1" >&2; exit 1 ;;
+  esac
+done
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly SCRIPT_DIR
 readonly LP_SERIES_API_URL=https://api.launchpad.net/devel/ubuntu/series
 readonly DEFAULT_MIRROR_URL=http://archive.ubuntu.com/ubuntu
 readonly OLD_RELEASES_MIRROR_URL=https://old-releases.ubuntu.com/ubuntu
@@ -135,5 +145,19 @@ for codename in $(echo "${full_json}" | jq -c -M -r '.[] | .codename'); do
   full_json="$(echo "${full_json}" |
     jq -c -M "[.[] | select(.codename == \"${codename}\") |= ${suite_json}]")"
 done
+
+if [ "${update_action_yml}" = true ]; then
+  action_yml="${SCRIPT_DIR}/action.yml"
+  python3 -c "
+import re, sys
+
+action = open(sys.argv[1]).read()
+new_json = sys.argv[2]
+pattern = r'(RELEASE_INFO_JSON: >-\n).*?(\n\n      run:)'
+replacement = r'\g<1>          ' + new_json + r'\g<2>'
+result = re.sub(pattern, replacement, action, flags=re.DOTALL)
+open(sys.argv[1], 'w').write(result)
+" "${action_yml}" "${full_json}"
+fi
 
 echo "${full_json}"
