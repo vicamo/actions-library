@@ -106,6 +106,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
+          token: ${{ secrets.ACTIONS_LIBRARY_AUTO_PULL_REQUEST }}
           branch: auto/ubuntu-releases-update
           delete-branch: true
           title: 'ubuntu-releases: update hardcoded release info'
