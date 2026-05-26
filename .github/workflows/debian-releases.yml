@@ -93,15 +93,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Install jq
-        run: |
-          if ! which jq; then
-            sudo apt-get update --quiet
-            sudo apt-get install --no-install-recommends --yes jq
-          fi
+      - uses: actions/download-artifact@v6
+        with:
+          name: debian-releases-jsons
 
-      - name: Regenerate and update action.yml
-        run: ./debian-releases/buildinfo.sh --update-action-yml > /dev/null
+      - name: Update action.yml
+        run: |
+          full_json="$(jq -c -M . regen.json)"
+          python3 scripts/update_release_info.py debian-releases/action.yml "${full_json}"
+          npx prettier --write debian-releases/action.yml
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v8

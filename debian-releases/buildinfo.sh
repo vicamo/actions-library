@@ -157,16 +157,7 @@ done
 
 if [ "${update_action_yml}" = true ]; then
   action_yml="${SCRIPT_DIR}/action.yml"
-  python3 -c "
-import re, sys
-
-action = open(sys.argv[1]).read()
-new_json = sys.argv[2]
-pattern = r'(RELEASE_INFO_JSON: >-\n).*?(\n\n      run:)'
-replacement = r'\g<1>          ' + new_json + r'\g<2>'
-result = re.sub(pattern, replacement, action, flags=re.DOTALL)
-open(sys.argv[1], 'w').write(result)
-" "${action_yml}" "${full_json}"
+  python3 "${SCRIPT_DIR}/../scripts/update_release_info.py" "${action_yml}" "${full_json}"
   if command -v prettier > /dev/null 2>&1; then
     prettier --write "${action_yml}" > /dev/null 2>&1
   elif command -v npx > /dev/null 2>&1; then
