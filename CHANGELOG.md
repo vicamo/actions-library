@@ -2,6 +2,55 @@
 
 # Changelog
 
+## [1.13.1](https://github.com/vicamo/actions-library/compare/v1.13.0...v1.13.1) (2026-05-26)
+
+### 🐛 Bugfixes
+
+- rewrite with prettier
+  ([fa83049](https://github.com/vicamo/actions-library/commit/fa830499d4e40138fc49e48e07b594c4866006c4))
+- rewrite with prettier
+  ([3de7136](https://github.com/vicamo/actions-library/commit/3de71368b4558f8a60a3d53dcb5da5cf8e4aa901))
+- sort JSON keys
+  ([074ccd9](https://github.com/vicamo/actions-library/commit/074ccd9f9a7a6835393393a4b58ea1f7e61b2bfd))
+- sort JSON keys
+  ([cd51798](https://github.com/vicamo/actions-library/commit/cd51798bde1dc68260e449ab2022ccf5fe7c5e6c))
+- use another fine-grained PAT
+  ([1079188](https://github.com/vicamo/actions-library/commit/1079188ffd45403392060f83dc86f6604817ad92))
+- use another fine-grained PAT
+  ([dd844af](https://github.com/vicamo/actions-library/commit/dd844afacc295533f80bd2ffb4c12e9f7cef8f4c))
+
+### 🧰 Maintenance
+
+- **deps:** bump actions/checkout from 5 to 6
+  ([af90641](https://github.com/vicamo/actions-library/commit/af90641e13bc4cfd9fcb4f1c9ac6574f0eafda15))
+- **deps:** bump actions/checkout from 5 to 6
+  ([749321a](https://github.com/vicamo/actions-library/commit/749321a50d170e0f6cd4fe018b1e931fd9edd4e4))
+- **deps:** bump actions/upload-artifact from 4 to 6
+  ([359e7be](https://github.com/vicamo/actions-library/commit/359e7bea558785a111e6e551ba5d23069c9554de))
+- **deps:** bump actions/upload-artifact from 4 to 6
+  ([2f4beab](https://github.com/vicamo/actions-library/commit/2f4beab900d2b38d92f3073c65f443f8430aab71))
+- **deps:** bump actions/upload-artifact from 6 to 7
+  ([d644d5a](https://github.com/vicamo/actions-library/commit/d644d5ab02771033eeb78d6bf1f2737a8bd2e0d4))
+- **deps:** bump actions/upload-artifact from 6 to 7
+  ([7f8a8a6](https://github.com/vicamo/actions-library/commit/7f8a8a66cdfd67151292bc00a250ff1891443569))
+- **deps:** bump googleapis/release-please-action from 4 to 5
+  ([697c7fc](https://github.com/vicamo/actions-library/commit/697c7fc3ca2e8cdf64a0a1e825bcf807dd8a38e0))
+- **deps:** bump googleapis/release-please-action from 4 to 5
+  ([c909a78](https://github.com/vicamo/actions-library/commit/c909a784ebb745591ac35f642d6311fb749ae20b))
+- **deps:** bump peter-evans/create-pull-request from 7 to 8
+  ([9f84bce](https://github.com/vicamo/actions-library/commit/9f84bce07ece8fa9acd0687c760e2dd240a1ae95))
+- **deps:** bump peter-evans/create-pull-request from 7 to 8
+  ([2befad7](https://github.com/vicamo/actions-library/commit/2befad71bb5b0321f644dfa7a1c6f247168bbccc))
+
+### 🧰 Testing
+
+- add pull-requests: write permission for super-linter comments
+  ([b486f2f](https://github.com/vicamo/actions-library/commit/b486f2f24c97106424999d68a64fe9a77eb7c8cd))
+- add pull-requests: write permission for super-linter comments
+  ([f7918e3](https://github.com/vicamo/actions-library/commit/f7918e3bd41427aff9e1e8041297ea2b8c73c666))
+- auto-create PR when hardcoded data drifts
+  ([9302bc0](https://github.com/vicamo/actions-library/commit/9302bc0e382747117a75d74062f8d298ff777cad))
+
 ## [1.13.0](https://github.com/vicamo/actions-library/compare/v1.12.2...v1.13.0) (2025-10-21)
 
 ### 🚀 Features
