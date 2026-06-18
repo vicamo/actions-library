@@ -1,0 +1,65 @@
+name: Maximize Docker Disk
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'maximize-docker-disk/**'
+      - '!maximize-docker-disk/*.md'
+  push:
+    branches:
+      - main
+    paths:
+      - 'maximize-docker-disk/**'
+      - '!maximize-docker-disk/*.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-linux:
+    name: Test (Linux)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Run maximize-docker-disk
+        uses: ./maximize-docker-disk
+
+      - name: Verify docker is functional
+        run: |
+          docker run --rm hello-world
+
+      - name: Verify LVM volume
+        run: |
+          echo "::group::LVM state"
+          sudo lvs
+          echo "::endgroup::"
+
+          echo "::group::Mount points"
+          mount | grep merged
+          echo "::endgroup::"
+
+          echo "::group::Docker root dir"
+          docker info --format '{{.DockerRootDir}}'
+          echo "::endgroup::"
+
+          # Verify /var/lib/docker is on the merged volume
+          df /var/lib/docker | grep -q merged
+
+  test-windows:
+    name: Test (Windows)
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Run maximize-docker-disk
+        uses: ./maximize-docker-disk
+
+      - name: Verify docker is functional
+        run: |
+          docker run --rm mcr.microsoft.com/windows/nanoserver:ltsc2022 cmd /c echo hello
