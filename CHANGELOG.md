@@ -2,6 +2,27 @@
 
 # Changelog
 
+## [1.15.0](https://github.com/vicamo/actions-library/compare/v1.14.0...v1.15.0) (2026-06-18)
+
+### 🚀 Features
+
+- add maximize-docker-disk composite action
+  ([2daef16](https://github.com/vicamo/actions-library/commit/2daef16dbf4cdba468a574f794b7476cd30eb824))
+
+### 🧰 Maintenance
+
+- **deps:** bump actions/download-artifact from 6 to 8
+  ([b88d908](https://github.com/vicamo/actions-library/commit/b88d9089c997960a41c39dca307c518c59eeead2))
+- **deps:** bump actions/download-artifact from 6 to 8
+  ([3fdb776](https://github.com/vicamo/actions-library/commit/3fdb7761fea99f6a5fd28a2bb21de16a2aed378c))
+
+### 🧰 Testing
+
+- add testing workflow for maximize-docker-disk
+  ([0a076c1](https://github.com/vicamo/actions-library/commit/0a076c1d0f952ced787f0ce1699fa8f50fa0c66b))
+- markdownlint: use one_or_ordered for ol style
+  ([570363d](https://github.com/vicamo/actions-library/commit/570363def34ba542ef4d447a8274957ccb91e935))
+
 ## [1.13.1](https://github.com/vicamo/actions-library/compare/v1.13.0...v1.13.1) (2026-05-26)
 
 ### 🐛 Bugfixes
