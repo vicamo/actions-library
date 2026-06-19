@@ -2,6 +2,19 @@
 
 # Changelog
 
+## [1.15.1](https://github.com/vicamo/actions-library/compare/v1.15.0...v1.15.1) (2026-06-19)
+
+### 🐛 Bugfixes
+
+- move and bind /var/lib/buildkit as well
+  ([f0c9ff5](https://github.com/vicamo/actions-library/commit/f0c9ff50ceb09164c8304ae5b394d06475688163))
+- move and bind /var/lib/buildkit as well
+  ([21bc18d](https://github.com/vicamo/actions-library/commit/21bc18dfb86695e305efeddb89462d658d4c4565))
+- use consistent for Markdown unsorted list style
+  ([615ab7e](https://github.com/vicamo/actions-library/commit/615ab7ec86b15942d485a81f507a1d3c5264cb63))
+- use consistent for Markdown unsorted list style
+  ([e190dbf](https://github.com/vicamo/actions-library/commit/e190dbf925b4698ab5646089f3f490167ca94f03))
+
 ## [1.15.0](https://github.com/vicamo/actions-library/compare/v1.14.0...v1.15.0) (2026-06-18)
 
 ### 🚀 Features
