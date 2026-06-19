@@ -49,6 +49,8 @@ jobs:
 
           # Verify /var/lib/docker is on the merged volume
           df /var/lib/docker | grep -q merged
+          # Verify /var/lib/buildkit is on the merged volume
+          df /var/lib/buildkit | grep -q merged
 
   test-windows:
     name: Test (Windows)
