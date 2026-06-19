@@ -1,6 +1,6 @@
 # Unordered list style
 MD004:
-  style: dash
+  style: consistent
 
 # Line length
 MD013:
