@@ -2,6 +2,22 @@
 
 # Changelog
 
+## [1.15.2](https://github.com/vicamo/actions-library/compare/v1.15.1...v1.15.2) (2026-07-08)
+
+### 🐛 Bugfixes
+
+- migrate containerd as well
+  ([3768f44](https://github.com/vicamo/actions-library/commit/3768f4416c861d77faaad583dc1de09f65485200))
+- migrate containerd as well
+  ([eadd731](https://github.com/vicamo/actions-library/commit/eadd731665ea494dd42406059397932abfa9ee92))
+
+### 🧰 Maintenance
+
+- **deps:** bump actions/checkout from 6 to 7
+  ([d103fc5](https://github.com/vicamo/actions-library/commit/d103fc553d8dea400c4aa62129cab939e39e27cc))
+- **deps:** bump actions/checkout from 6 to 7
+  ([b922699](https://github.com/vicamo/actions-library/commit/b922699a3ff1747ee563504263c5f8a415198cf1))
+
 ## [1.15.1](https://github.com/vicamo/actions-library/compare/v1.15.0...v1.15.1) (2026-06-19)
 
 ### 🐛 Bugfixes
