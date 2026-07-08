@@ -226,15 +226,19 @@ runs:
         df -h
         echo "::endgroup::"
 
-    - name: Move docker service folder
+    - name: Move docker/containerd service folder
       if: runner.os == 'Linux'
       shell: bash
       run: |
         echo "::group::Move docker service folder"
+
         sudo systemctl stop docker.service
+        sudo systemctl stop containerd
+
         sudo mv /var/lib/docker /merged
         sudo mkdir -p /var/lib/docker
         sudo mount --bind /merged/docker /var/lib/docker
+
         if [ -d /var/lib/buildkit ]; then
           sudo mv /var/lib/buildkit /merged
         else
@@ -242,8 +246,15 @@ runs:
         fi
         sudo mkdir -p /var/lib/buildkit
         sudo mount --bind /merged/buildkit /var/lib/buildkit
+
+        sudo mv /var/lib/containerd /merged
+        sudo mkdir -p /var/lib/containerd
+        sudo mount --bind /merged/containerd /var/lib/containerd
+
+        sudo systemctl start containerd
         sudo systemctl start docker.service
         docker info
+
         echo "::endgroup::"
 
         echo "::group::Final disk space"
