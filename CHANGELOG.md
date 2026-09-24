@@ -2,6 +2,22 @@
 
 # Changelog
 
+## [1.16.0](https://github.com/vicamo/actions-library/compare/v1.15.2...v1.16.0) (2026-09-24)
+
+### 🚀 Features
+
+- **python-versions:** add action to enumerate available Python versions
+  ([677ffc5](https://github.com/vicamo/actions-library/commit/677ffc552033c9212f482f8f8264bb451e6113c1))
+- **python-versions:** add action to enumerate available Python versions
+  ([d9040e3](https://github.com/vicamo/actions-library/commit/d9040e354292f99ca29a758d9235268989b26c90))
+
+### 🧰 Testing
+
+- commit only action.yml when auto update
+  ([cc0a1da](https://github.com/vicamo/actions-library/commit/cc0a1da9b98eefeb95e681da38fdc2fb90fc88f4))
+- commit only action.yml when auto update
+  ([9268120](https://github.com/vicamo/actions-library/commit/9268120f855bb1ca206149f0a3669c2928546ae9))
+
 ## [1.15.2](https://github.com/vicamo/actions-library/compare/v1.15.1...v1.15.2) (2026-07-08)
 
 ### 🐛 Bugfixes
