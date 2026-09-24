@@ -1,0 +1,275 @@
+name: 'Python Versions'
+description:
+  'Fetch actions/python-versions manifest, filtered for setup-python matrices'
+branding:
+  icon: 'target'
+  color: 'blue'
+
+inputs:
+  stable:
+    description:
+      'Keep only manifest entries with `stable: true`. Set to `false` to also
+      include pre-releases (rc / alpha / beta).'
+    required: false
+    default: 'true'
+  version-range:
+    description: >-
+      PEP440-style specifier(s) to filter versions, e.g. ">=3.9,<3.13". Empty
+      means no range filter.
+    required: false
+    default: ''
+  latest-only:
+    description: >-
+      Collapse to the latest patch per major.minor (X.Y) series.
+    required: false
+    default: 'false'
+  platform:
+    description:
+      'Comma-separated platforms to keep (e.g. "linux,darwin,win32,rhel").'
+    required: false
+    default: ''
+  arch:
+    description: 'Comma-separated arches to keep (e.g. "x64,arm64").'
+    required: false
+    default: ''
+  platform-version:
+    description:
+      'Comma-separated platform_version values to keep (e.g. "22.04,24.04").
+      Only applies to platforms that carry a version (linux, rhel).'
+    required: false
+    default: ''
+  freethreaded:
+    description:
+      'Freethreaded (PEP 703) arches: "any" (default, no filter), "only", or
+      "exclude".'
+    required: false
+    default: 'any'
+  exclude-eol:
+    description:
+      'Drop X.Y series past their end-of-life date. EOL data is fetched from
+      `eol-url` at runtime.'
+    required: false
+    default: 'false'
+  eol-url:
+    description: 'Override the end-of-life JSON URL (endoflife.date format).'
+    required: false
+    default: 'https://endoflife.date/api/python.json'
+  limit:
+    description: 'Keep at most N entries after sort. 0 or empty means no limit.'
+    required: false
+    default: ''
+  sort:
+    description: 'Result order by version: "desc" (default) or "asc".'
+    required: false
+    default: 'desc'
+  manifest-url:
+    description: 'Override the upstream versions-manifest.json URL.'
+    required: false
+    default: 'https://raw.githubusercontent.com/actions/python-versions/refs/heads/main/versions-manifest.json'
+
+outputs:
+  json:
+    description: >-
+      A JSON-formatted string, filtered by the inputs. Element shape:
+        [
+          {
+            "version": "3.13.0",
+            "stable": true,
+            "release_url":
+      "https://github.com/actions/python-versions/releases/tag/...",
+            "platforms": [
+              {
+                "platform": "linux",
+                "platform_version": "24.04",
+                "arches": ["arm64", "x64", ...]
+              },
+              { "platform": "darwin", "arches": [...] },
+              ...
+            ]
+          }
+        ]
+    value: ${{ steps.filter.outputs.json }}
+  versions:
+    description: >-
+      JSON array of version strings from `json`, suitable to feed into a job
+      matrix via fromJSON() and consumed by actions/setup-python.
+    value: ${{ steps.filter.outputs.versions }}
+
+runs:
+  using: 'composite'
+  steps:
+    - id: filter
+      shell: bash
+      env:
+        INPUT_STABLE: ${{ inputs.stable }}
+        INPUT_VERSION_RANGE: ${{ inputs.version-range }}
+        INPUT_LATEST_ONLY: ${{ inputs.latest-only }}
+        INPUT_PLATFORM: ${{ inputs.platform }}
+        INPUT_ARCH: ${{ inputs.arch }}
+        INPUT_PLATFORM_VERSION: ${{ inputs.platform-version }}
+        INPUT_FREETHREADED: ${{ inputs.freethreaded }}
+        INPUT_EXCLUDE_EOL: ${{ inputs.exclude-eol }}
+        EOL_URL: ${{ inputs.eol-url }}
+        INPUT_LIMIT: ${{ inputs.limit }}
+        INPUT_SORT: ${{ inputs.sort }}
+        MANIFEST_URL: ${{ inputs.manifest-url }}
+      run: |
+        python3 - <<'PY' >> "${GITHUB_OUTPUT}"
+        import datetime as _dt
+        import json, os, re, sys, urllib.request
+
+        # X.Y -> ISO EOL date; populated on demand from endoflife.date.
+        EOL = {}
+        TODAY = _dt.date.today()
+
+        def load_eol():
+            with urllib.request.urlopen(os.environ["EOL_URL"]) as r:
+                for cycle in json.load(r):
+                    m = re.match(r"^(\d+)\.(\d+)$", str(cycle.get("cycle", "")))
+                    eol = cycle.get("eol")
+                    if m and isinstance(eol, str):
+                        EOL[(int(m.group(1)), int(m.group(2)))] = eol
+
+        def _csv(name):
+            return [x.strip() for x in os.environ[name].split(",") if x.strip()]
+
+        stable_only    = os.environ["INPUT_STABLE"].lower() == "true"
+        latest_only    = os.environ["INPUT_LATEST_ONLY"].lower() == "true"
+        exclude_eol    = os.environ["INPUT_EXCLUDE_EOL"].lower() == "true"
+        version_range  = os.environ["INPUT_VERSION_RANGE"].strip()
+        freethreaded   = os.environ["INPUT_FREETHREADED"].strip().lower() or "any"
+        sort_order     = os.environ["INPUT_SORT"].strip().lower() or "desc"
+        limit_raw      = os.environ["INPUT_LIMIT"].strip()
+        limit          = int(limit_raw) if limit_raw else 0
+        platforms_f    = set(_csv("INPUT_PLATFORM"))
+        arches_f       = set(_csv("INPUT_ARCH"))
+        pvers_f        = set(_csv("INPUT_PLATFORM_VERSION"))
+
+        if freethreaded not in ("any", "only", "exclude"):
+            print(f"::error::freethreaded must be any|only|exclude", file=sys.stderr); sys.exit(1)
+        if sort_order not in ("asc", "desc"):
+            print(f"::error::sort must be asc|desc", file=sys.stderr); sys.exit(1)
+
+        if exclude_eol:
+            load_eol()
+
+        with urllib.request.urlopen(os.environ["MANIFEST_URL"]) as r:
+            raw = json.load(r)
+
+        # Group files -> platform entries per version.
+        data = []
+        for e in raw:
+            groups = {}
+            for f in e.get("files", []):
+                key = (f["platform"], f.get("platform_version"))
+                groups.setdefault(key, set()).add(f["arch"])
+            plats = []
+            for (plat, pver), arches in groups.items():
+                item = {"platform": plat, "arches": sorted(arches)}
+                if pver is not None:
+                    item["platform_version"] = pver
+                plats.append(item)
+            plats.sort(key=lambda p: (p["platform"], p.get("platform_version", "")))
+            data.append({
+                "version": e["version"],
+                "stable": e.get("stable", False),
+                "release_url": e.get("release_url", ""),
+                "platforms": plats,
+            })
+
+        _V = re.compile(r"^(\d+)\.(\d+)(?:\.(\d+))?(?:[-.]?(a|b|rc|alpha|beta)\.?(\d+))?")
+
+        def parse(v):
+            m = _V.match(v)
+            if not m:
+                return None
+            major, minor, patch, pre, preN = m.groups()
+            patch = int(patch) if patch else 0
+            pre_rank = {"a": -3, "alpha": -3, "b": -2, "beta": -2, "rc": -1}
+            pre_key = (pre_rank.get(pre, 0), int(preN) if preN else 0)
+            return (int(major), int(minor), patch, pre_key)
+
+        def cmp_specifier(v_tuple, op, target):
+            n = len(target)
+            a, b = v_tuple[:n], target
+            return {">=": a>=b, "<=": a<=b, ">": a>b, "<": a<b, "==": a==b, "!=": a!=b}[op]
+
+        def parse_specifier(spec):
+            out = []
+            for part in spec.split(","):
+                part = part.strip()
+                if not part: continue
+                m = re.match(r"^(>=|<=|==|!=|>|<)\s*(\d[\w.\-]*)$", part)
+                if not m:
+                    print(f"::error::bad version-range fragment: {part!r}", file=sys.stderr); sys.exit(1)
+                op, ver = m.group(1), m.group(2)
+                pv = parse(ver)
+                if pv is None:
+                    print(f"::error::cannot parse version {ver!r}", file=sys.stderr); sys.exit(1)
+                out.append((op, pv[:len(ver.split('.'))]))
+            return out
+
+        specs = parse_specifier(version_range) if version_range else []
+
+        def is_eol(pv):
+            key = (pv[0], pv[1])
+            eol = EOL.get(key)
+            if not eol:
+                return False
+            return TODAY >= _dt.date.fromisoformat(eol)
+
+        def filter_arches(arches):
+            out = []
+            for a in arches:
+                is_ft = a.endswith("-freethreaded")
+                if freethreaded == "only" and not is_ft: continue
+                if freethreaded == "exclude" and is_ft: continue
+                if arches_f and a not in arches_f: continue
+                out.append(a)
+            return out
+
+        def filter_platforms(plats):
+            keep = []
+            for p in plats:
+                if platforms_f and p["platform"] not in platforms_f: continue
+                if pvers_f and p.get("platform_version") not in pvers_f: continue
+                arches = filter_arches(p["arches"])
+                if not arches: continue
+                q = {"platform": p["platform"], "arches": arches}
+                if "platform_version" in p:
+                    q["platform_version"] = p["platform_version"]
+                keep.append(q)
+            return keep
+
+        def keep_entry(entry):
+            if stable_only and not entry["stable"]:
+                return None
+            pv = parse(entry["version"])
+            if pv is None: return None
+            if exclude_eol and is_eol(pv): return None
+            for op, target in specs:
+                if not cmp_specifier(pv, op, target): return None
+            plats = filter_platforms(entry["platforms"])
+            if not plats: return None
+            return {**entry, "platforms": plats}
+
+        filtered = [e for e in (keep_entry(e) for e in data) if e is not None]
+
+        if latest_only:
+            best = {}
+            for e in filtered:
+                pv = parse(e["version"])
+                key = (pv[0], pv[1])
+                if key not in best or parse(best[key]["version"]) < pv:
+                    best[key] = e
+            filtered = list(best.values())
+
+        filtered.sort(key=lambda e: parse(e["version"]), reverse=(sort_order == "desc"))
+
+        if limit > 0:
+            filtered = filtered[:limit]
+
+        versions = [e["version"] for e in filtered]
+        print("json=" + json.dumps(filtered, separators=(",", ":")))
+        print("versions=" + json.dumps(versions, separators=(",", ":")))
+        PY

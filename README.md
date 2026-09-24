@@ -9,6 +9,7 @@ Collection of useful GitHub Actions for personal use.
 
 - [Debian Releases](debian-releases/README.md)
 - [Maximize Docker Disk](maximize-docker-disk/README.md)
+- [Python Versions](python-versions/README.md)
 - [Ubuntu Releases](ubuntu-releases/README.md)
 
 ## License

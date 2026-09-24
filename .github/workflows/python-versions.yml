@@ -1,0 +1,232 @@
+name: Python Versions
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'python-versions/**'
+      - '!python-versions/*.md'
+  push:
+    branches:
+      - main
+    paths:
+      - 'python-versions/**'
+      - '!python-versions/*.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Filter Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+
+      # ---------- stable ----------
+      - name: 'stable=true (default): only stable versions'
+        id: t_stable_true
+        uses: ./python-versions
+        with:
+          version-range: '>=3.14'
+      - name: 'stable=false: includes pre-releases'
+        id: t_stable_false
+        uses: ./python-versions
+        with:
+          stable: 'false'
+          version-range: '>=3.14'
+
+      # ---------- version-range ----------
+      - name: 'version-range: >=3.10,<3.12'
+        id: t_range
+        uses: ./python-versions
+        with:
+          version-range: '>=3.10,<3.12'
+          latest-only: 'true'
+
+      # ---------- latest-only ----------
+      - name: 'latest-only: one per X.Y'
+        id: t_latest
+        uses: ./python-versions
+        with:
+          latest-only: 'true'
+
+      # ---------- platform ----------
+      - name: 'platform=darwin'
+        id: t_platform
+        uses: ./python-versions
+        with:
+          platform: 'darwin'
+          latest-only: 'true'
+          version-range: '>=3.12'
+
+      # ---------- arch ----------
+      - name: 'arch=arm64'
+        id: t_arch
+        uses: ./python-versions
+        with:
+          arch: 'arm64'
+          latest-only: 'true'
+          version-range: '>=3.12'
+
+      # ---------- platform-version ----------
+      - name: 'platform-version=24.04'
+        id: t_pver
+        uses: ./python-versions
+        with:
+          platform: 'linux'
+          platform-version: '24.04'
+          latest-only: 'true'
+          version-range: '>=3.12'
+
+      # ---------- freethreaded=only ----------
+      - name: 'freethreaded=only'
+        id: t_ft_only
+        uses: ./python-versions
+        with:
+          freethreaded: 'only'
+          latest-only: 'true'
+
+      # ---------- freethreaded=exclude ----------
+      - name: 'freethreaded=exclude'
+        id: t_ft_excl
+        uses: ./python-versions
+        with:
+          freethreaded: 'exclude'
+          latest-only: 'true'
+          version-range: '>=3.13'
+
+      # ---------- exclude-eol ----------
+      - name: 'exclude-eol'
+        id: t_eol
+        uses: ./python-versions
+        with:
+          exclude-eol: 'true'
+          latest-only: 'true'
+
+      # ---------- limit ----------
+      - name: 'limit=3'
+        id: t_limit
+        uses: ./python-versions
+        with:
+          latest-only: 'true'
+          limit: '3'
+
+      # ---------- sort ----------
+      - name: 'sort=asc'
+        id: t_sort
+        uses: ./python-versions
+        with:
+          latest-only: 'true'
+          exclude-eol: 'true'
+          sort: 'asc'
+          limit: '3'
+
+      # ---------- manifest-url override ----------
+      - name: 'manifest-url override (same URL, sanity check)'
+        id: t_manifest_url
+        uses: ./python-versions
+        with:
+          latest-only: 'true'
+          limit: '1'
+          manifest-url: 'https://raw.githubusercontent.com/actions/python-versions/refs/heads/main/versions-manifest.json'
+
+      - name: Assert all outputs
+        env:
+          T_STABLE_TRUE: ${{ steps.t_stable_true.outputs.versions }}
+          T_STABLE_FALSE: ${{ steps.t_stable_false.outputs.versions }}
+          T_RANGE: ${{ steps.t_range.outputs.versions }}
+          T_LATEST: ${{ steps.t_latest.outputs.versions }}
+          T_PLATFORM_JSON: ${{ steps.t_platform.outputs.json }}
+          T_ARCH_JSON: ${{ steps.t_arch.outputs.json }}
+          T_PVER_JSON: ${{ steps.t_pver.outputs.json }}
+          T_FT_ONLY_JSON: ${{ steps.t_ft_only.outputs.json }}
+          T_FT_EXCL_JSON: ${{ steps.t_ft_excl.outputs.json }}
+          T_EOL: ${{ steps.t_eol.outputs.versions }}
+          T_LIMIT: ${{ steps.t_limit.outputs.versions }}
+          T_SORT: ${{ steps.t_sort.outputs.versions }}
+          T_MANIFEST_URL: ${{ steps.t_manifest_url.outputs.versions }}
+        run: |
+          set -euo pipefail
+
+          fail() { echo "::error::$*"; exit 1; }
+          expect_true() {
+            local label=$1 json=$2 filter=$3
+            local got
+            got=$(echo "${json}" | jq -e "${filter}" 2>&1) \
+              || fail "${label}: filter '${filter}' failed: ${got}"
+            echo "  ok  ${label}"
+          }
+
+          echo "== stable =="
+          # stable=true rejects rc/alpha/beta
+          expect_true 'stable=true has no rc' \
+            "${T_STABLE_TRUE}" 'all(test("-(rc|alpha|beta)")|not)'
+          # stable=false must include at least one pre-release for >=3.14
+          expect_true 'stable=false includes rc' \
+            "${T_STABLE_FALSE}" 'any(test("-(rc|alpha|beta)"))'
+
+          echo "== version-range =="
+          # Range >=3.10,<3.12 latest-only must yield exactly [3.11.x, 3.10.x]
+          expect_true 'version-range count==2' \
+            "${T_RANGE}" 'length == 2'
+          expect_true 'version-range series 3.10/3.11 only' \
+            "${T_RANGE}" 'all(test("^3\\.1[01]\\."))'
+
+          echo "== latest-only =="
+          # One entry per X.Y — no duplicate major.minor.
+          expect_true 'latest-only unique X.Y' \
+            "${T_LATEST}" '[.[] | capture("^(?<xy>\\d+\\.\\d+)").xy]
+                          | (unique | length) == length'
+
+          echo "== platform =="
+          expect_true 'platform=darwin only darwin platforms' \
+            "${T_PLATFORM_JSON}" 'all(.platforms | all(.platform == "darwin"))'
+
+          echo "== arch =="
+          expect_true 'arch=arm64 only arm64 arches' \
+            "${T_ARCH_JSON}" \
+            'all(.platforms | all(.arches | all(. == "arm64")))'
+
+          echo "== platform-version =="
+          expect_true 'platform-version=24.04 only 24.04' \
+            "${T_PVER_JSON}" \
+            'all(.platforms | all(.platform_version == "24.04"))'
+
+          echo "== freethreaded =="
+          expect_true 'freethreaded=only arches all -freethreaded' \
+            "${T_FT_ONLY_JSON}" \
+            'all(.platforms | all(.arches | all(endswith("-freethreaded"))))'
+          expect_true 'freethreaded=exclude no -freethreaded arches' \
+            "${T_FT_EXCL_JSON}" \
+            'all(.platforms | all(.arches | all(endswith("-freethreaded") | not)))'
+
+          echo "== exclude-eol =="
+          # No X.Y with EOL date in the past. Fetch EOL to build the past-set.
+          eol_past=$(curl -sSf https://endoflife.date/api/python.json \
+            | jq -c --arg today "$(date -u +%F)" \
+                'map(select(.eol <= $today)) | map(.cycle)')
+          expect_true 'exclude-eol drops past-EOL X.Y' \
+            "${T_EOL}" \
+            "([.[] | capture(\"^(?<xy>\\\\d+\\\\.\\\\d+)\").xy]
+              - ${eol_past}) == [.[] | capture(\"^(?<xy>\\\\d+\\\\.\\\\d+)\").xy]"
+
+          echo "== limit =="
+          expect_true 'limit=3 -> length 3' "${T_LIMIT}" 'length == 3'
+
+          echo "== sort =="
+          # Ascending in numeric version order (split into int tuples so
+          # 3.9.8 < 3.10.21, unlike lexical string sort).
+          expect_true 'sort=asc, ascending' "${T_SORT}" \
+            'map(split(".") | map(tonumber? // 0)) | . == sort'
+
+          echo "== manifest-url =="
+          expect_true 'manifest-url override returns 1 entry' \
+            "${T_MANIFEST_URL}" 'length == 1'
+
+          echo "All filter tests passed."
