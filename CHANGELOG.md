@@ -2,6 +2,20 @@
 
 # Changelog
 
+## [1.17.0](https://github.com/vicamo/actions-library/compare/v1.16.0...v1.17.0) (2026-10-26)
+
+### 🧰 Maintenance
+
+- **deps:** bump super-linter/super-linter from 8 to 9
+  ([4508b65](https://github.com/vicamo/actions-library/commit/4508b655b1faf5e0aac8b856b087bc633d2f5bf4))
+- **deps:** bump super-linter/super-linter from 8 to 9
+  ([df218c9](https://github.com/vicamo/actions-library/commit/df218c927bf63f03fc3db476a9f9b6da042851ef))
+
+### 🚀 Features
+
+- ubuntu-releases: update hardcoded release info
+  ([fd9c09f](https://github.com/vicamo/actions-library/commit/fd9c09f7337c833ebbf5f7221bb00efc3544c02a))
+
 ## [1.16.0](https://github.com/vicamo/actions-library/compare/v1.15.2...v1.16.0) (2026-09-24)
 
 ### 🚀 Features
